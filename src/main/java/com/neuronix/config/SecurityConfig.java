@@ -14,13 +14,14 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/users").permitAll()
+                        .requestMatchers("/api/v1/users/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
                         .anyRequest().authenticated()
                 );
