@@ -1,5 +1,6 @@
 package com.neuronix.user;
 
+import com.neuronix.exception.UserNotFoundException;
 import com.neuronix.user.dto.CreateUserRequest;
 import com.neuronix.user.dto.UserResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,7 +50,9 @@ public class UserService {
     public UserResponse getUserById(Long id) {
 
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException(
+                        "User not found with id: " + id
+                ));
 
         return new UserResponse(
                 user.getId(),
