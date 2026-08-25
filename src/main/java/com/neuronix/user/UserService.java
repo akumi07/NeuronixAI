@@ -1,5 +1,6 @@
 package com.neuronix.user;
 
+import com.neuronix.exception.EmailAlreadyExistsException;
 import com.neuronix.exception.UserNotFoundException;
 import com.neuronix.user.dto.CreateUserRequest;
 import com.neuronix.user.dto.UserResponse;
@@ -21,6 +22,11 @@ public class UserService {
     }
 
     public UserResponse createUser(CreateUserRequest request) {
+        if (userRepository.findByEmail(request.email()).isPresent()) {
+            throw new EmailAlreadyExistsException(
+                    "Email is already registered"
+            );
+        }
         String passwordHash = passwordEncoder.encode(request.password());
 
         User user = new User(
@@ -52,6 +58,19 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(
                         "User not found with id: " + id
+                ));
+
+        return new UserResponse(
+                user.getId(),
+                user.getEmail(),
+                user.getCreatedAt()
+        );
+    }
+    public UserResponse getUserByEmail(String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(
+                        "User not found with email: " + email
                 ));
 
         return new UserResponse(

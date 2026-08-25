@@ -19,4 +19,23 @@ public class GlobalExceptionHandler {
                 "message", exception.getMessage()
         );
     }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Map<String, String> handleEmailAlreadyExists(
+            EmailAlreadyExistsException exception
+    ) {
+        return Map.of(
+                "message", exception.getMessage()
+        );
+    }
+    @ExceptionHandler(InvalidCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Map<String, String> handleInvalidCredentials(
+            InvalidCredentialsException exception
+    ) {
+        return Map.of(
+                "message", exception.getMessage()
+        );
+    }
 }
