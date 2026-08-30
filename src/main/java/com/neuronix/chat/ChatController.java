@@ -17,6 +17,9 @@ public class ChatController {
     public ChatResponse chat(
             @Valid @RequestBody ChatRequest request
     ) {
-        return chatService.chat(request.message());
+        return chatService.chat(
+                request.conversationId(),
+                request.message()
+        );
     }
 }
