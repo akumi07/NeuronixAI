@@ -36,4 +36,8 @@ public class Conversation {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
+
+    public void updateTimestamp() {
+        this.updatedAt = LocalDateTime.now();
+    }
 }

@@ -1,7 +1,10 @@
 package com.neuronix.ai;
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.messages.Message;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class OpenAiLlmClient implements LlmClient {
@@ -13,11 +16,11 @@ public class OpenAiLlmClient implements LlmClient {
     }
 
     @Override
-    public String generateResponse(String message) {
+    public String generateResponse(List<Message> messages) {
 
         return chatClient
                 .prompt()
-                .user(message)
+                .messages(messages)
                 .call()
                 .content();
     }
