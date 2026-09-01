@@ -14,6 +14,7 @@ public class OpenAiLlmClient implements LlmClient {
     public OpenAiLlmClient(ChatClient.Builder builder) {
         this.chatClient = builder.build();
     }
+    // rag task will start
 
     @Override
     public String generateResponse(List<Message> messages) {
