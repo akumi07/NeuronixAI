@@ -3,6 +3,7 @@ package com.neuronix.document.service;
 import com.neuronix.document.entity.Document;
 import com.neuronix.document.entity.DocumentChunk;
 import com.neuronix.document.repository.DocumentChunkRepository;
+import com.neuronix.rag.embedding.EmbeddingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +19,12 @@ public class DocumentChunkingService {
     private static final int CHUNK_OVERLAP = 200;
 
     private final DocumentChunkRepository documentChunkRepository;
+    private final EmbeddingService embeddingService;
 
     public List<DocumentChunk> chunkDocument(
             Document document,
             String text
     ) {
-
         if (text == null || text.isBlank()) {
             throw new IllegalArgumentException(
                     "Document text must not be empty"
@@ -54,6 +55,14 @@ public class DocumentChunkingService {
                 chunk.setChunkIndex(chunkIndex++);
                 chunk.setContent(chunkText);
                 chunk.setCreatedAt(LocalDateTime.now());
+
+                /*
+                 * Generate embedding for this chunk.
+                 */
+                float[] embedding =
+                        embeddingService.generateEmbedding(chunkText);
+
+                chunk.setEmbedding(embedding);
 
                 chunks.add(chunk);
             }

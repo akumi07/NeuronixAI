@@ -8,5 +8,11 @@ import java.util.List;
 public interface DocumentChunkRepository
         extends JpaRepository<DocumentChunk, Long> {
 
-    List<DocumentChunk> findByDocumentIdOrderByChunkIndex(Long documentId);
+    List<DocumentChunk> findByDocumentIdOrderByChunkIndex(
+            Long documentId
+    );
+
+    List<DocumentChunk> findByDocumentIdAndEmbeddingIsNullOrderByChunkIndex(
+            Long documentId
+    );
 }
