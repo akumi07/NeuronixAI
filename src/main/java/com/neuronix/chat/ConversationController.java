@@ -3,10 +3,8 @@ package com.neuronix.chat;
 import com.neuronix.chat.dto.ConversationResponse;
 import com.neuronix.chat.dto.MessageResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import com.neuronix.chat.dto.UpdateConversationRequest;
 
 import java.util.List;
 
@@ -26,5 +24,16 @@ public class ConversationController {
             @PathVariable Long conversationId
     ) {
         return conversationService.getConversationMessages(conversationId);
+    }
+
+    @PatchMapping("/{conversationId}")
+    public ConversationResponse updateConversation(
+            @PathVariable Long conversationId,
+            @RequestBody UpdateConversationRequest request
+    ) {
+        return conversationService.updateConversation(
+                conversationId,
+                request
+        );
     }
 }
