@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
@@ -27,4 +30,14 @@ public class ConversationController {
     ) {
         return conversationService.getConversationMessages(conversationId);
     }
+
+    @DeleteMapping("/{conversationId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteConversation(
+            @PathVariable Long conversationId
+    ) {
+        conversationService.deleteConversation(conversationId);
+    }
+
 }
+
