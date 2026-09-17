@@ -32,12 +32,8 @@ public class ConversationController {
     }
 
     @DeleteMapping("/{conversationId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteConversation(
-            @PathVariable Long conversationId
-    ) {
-        conversationService.deleteConversation(conversationId);
+    public String deleteConversation(@PathVariable Long conversationId){
+        return conversationService.deleteConversation(conversationId);
     }
-
 }
 

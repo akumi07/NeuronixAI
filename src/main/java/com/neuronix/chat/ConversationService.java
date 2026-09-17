@@ -61,7 +61,7 @@ public class ConversationService {
                 .collect(Collectors.toList());
     }
     @Transactional
-    public void deleteConversation(Long conversationId) {
+    public String deleteConversation(Long conversationId) {
 
         User user = currentUserService.getCurrentUser();
 
@@ -75,5 +75,6 @@ public class ConversationService {
                 );
 
         conversationRepository.delete(conversation);
+        return "Deletion Successful !" ;
     }
 }
