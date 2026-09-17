@@ -2,7 +2,7 @@ package com.neuronix.chat;
 
 import com.neuronix.chat.dto.ConversationResponse;
 import com.neuronix.chat.dto.MessageResponse;
-import com.neuronix.chat.dto.UpdateConversationRequest;
+import com.neuronix.chat.dto.Update_titleConversationRequest;
 import com.neuronix.security.CurrentUserService;
 import com.neuronix.user.User;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +61,7 @@ public class ConversationService {
 
     public ConversationResponse updateConversation(
             Long conversationId,
-            UpdateConversationRequest request
+            Update_titleConversationRequest request
     ) {
 
         User user = currentUserService.getCurrentUser();
@@ -86,4 +86,22 @@ public class ConversationService {
                 updatedConversation.getUpdatedAt()
         );
     }
+
+    public void deleteConversation(
+            Long conversationId
+    ) {
+
+        User user = currentUserService.getCurrentUser();
+
+        Conversation conversation = conversationRepository
+                .findByIdAndUser(conversationId, user)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Conversation not found"
+                        )
+                );
+
+        conversationRepository.delete(conversation);
+    }
+
 }
