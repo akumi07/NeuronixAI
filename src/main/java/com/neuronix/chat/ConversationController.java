@@ -32,7 +32,7 @@ public class ConversationController {
             @PathVariable Long conversationId,
             @RequestBody Update_titleConversationRequest request
     ) {
-        return conversationService.updateConversation(
+        return conversationService.updateConversationTitle(
                 conversationId,
                 request
         );

@@ -59,7 +59,7 @@ public class ConversationService {
                 .collect(Collectors.toList());
     }
 
-    public ConversationResponse updateConversation(
+    public ConversationResponse updateConversationTitle(
             Long conversationId,
             Update_titleConversationRequest request
     ) {
