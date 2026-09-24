@@ -2,6 +2,7 @@ package com.neuronix.chat;
 
 import com.neuronix.chat.dto.ConversationResponse;
 import com.neuronix.chat.dto.MessageResponse;
+import com.neuronix.exception.ConversationNotFoundException;
 import com.neuronix.security.CurrentUserService;
 import com.neuronix.user.User;
 import jakarta.transaction.Transactional;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,9 +46,11 @@ public class ConversationService {
         Conversation conversation = conversationRepository
                 .findByIdAndUser(conversationId, user)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
                                 "Conversation not found"
                         )
+
                 );
 
         return messageRepository
@@ -68,13 +72,13 @@ public class ConversationService {
         Conversation conversation = conversationRepository
                 .findByIdAndUser(conversationId, user)
                 .orElseThrow(() ->
-                        new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
+                        new ConversationNotFoundException(
                                 "Conversation not found"
                         )
                 );
 
         conversationRepository.delete(conversation);
-        return "Deletion Successful !" ;
+
+        return "Deletion successful";
     }
 }

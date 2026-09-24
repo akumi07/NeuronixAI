@@ -22,17 +22,21 @@ public class ConversationController {
 
     @GetMapping
     public List<ConversationResponse> getMyConversations() {
+
+        //System.out.println("Controller reached");
         return conversationService.getMyConversations();
     }
     @GetMapping("/{conversationId}/messages")
     public List<MessageResponse> getConversationMessages(
             @PathVariable Long conversationId
     ) {
+        //System.out.println("Controller reached with ID: " + conversationId);
         return conversationService.getConversationMessages(conversationId);
     }
 
     @DeleteMapping("/{conversationId}")
     public String deleteConversation(@PathVariable Long conversationId){
+
         return conversationService.deleteConversation(conversationId);
     }
 }
