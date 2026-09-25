@@ -46,8 +46,7 @@ public class ConversationService {
         Conversation conversation = conversationRepository
                 .findByIdAndUser(conversationId, user)
                 .orElseThrow(() ->
-                        new ResponseStatusException(
-                                HttpStatus.NOT_FOUND,
+                        new ConversationNotFoundException(
                                 "Conversation not found"
                         )
 
