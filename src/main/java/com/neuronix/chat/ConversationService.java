@@ -63,26 +63,7 @@ public class ConversationService {
                 .collect(Collectors.toList());
     }
 
-    public MessageResponse getMessageById(Long conversationId, Long messageId) {
 
-        User currentUser = currentUserService.getCurrentUser();
-
-        Message message = messageRepository
-                .findByIdAndConversationIdAndConversationUser(
-                        messageId,
-                        conversationId,
-                        currentUser
-                )
-                .orElseThrow(() ->
-                        new MessageNotFoundException("Message not found"));
-
-        return new MessageResponse(
-                message.getId(),
-                message.getRole(),
-                message.getContent(),
-                message.getCreatedAt()
-        );
-    }
 
     @Transactional
     public String deleteConversation(Long conversationId) {
