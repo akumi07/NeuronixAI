@@ -3,6 +3,8 @@ package com.neuronix.document.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +27,10 @@ public class DocumentChunk {
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
+
+    @JdbcTypeCode(SqlTypes.VECTOR)
+    @Column(columnDefinition = "vector(1536)")
+    private float[] embedding;
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;

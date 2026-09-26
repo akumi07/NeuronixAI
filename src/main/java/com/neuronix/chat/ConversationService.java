@@ -3,6 +3,7 @@ package com.neuronix.chat;
 import com.neuronix.chat.dto.ConversationResponse;
 import com.neuronix.chat.dto.MessageResponse;
 import com.neuronix.exception.ConversationNotFoundException;
+import com.neuronix.chat.dto.Update_titleConversationRequest;
 import com.neuronix.security.CurrentUserService;
 import com.neuronix.user.User;
 import jakarta.transaction.Transactional;
