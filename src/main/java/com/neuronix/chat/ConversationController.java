@@ -27,7 +27,7 @@ public class ConversationController {
         return conversationService.getConversationMessages(conversationId);
     }
 
-    @PatchMapping("/{conversationId/title}")
+    @PatchMapping("/{conversationId}")
     public ConversationResponse updateConversation(
             @PathVariable Long conversationId,
             @RequestBody Update_titleConversationRequest request
@@ -37,6 +37,7 @@ public class ConversationController {
                 request
         );
     }
+
 }
 
     //delete

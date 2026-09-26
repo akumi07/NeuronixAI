@@ -66,20 +66,15 @@ public class ConversationService {
 
 
 
-    @Transactional
-    public String deleteConversation(Long conversationId) {
+        return new ConversationResponse(
+                updatedConversation.getId(),
+                updatedConversation.getTitle(),
+                updatedConversation.getCreatedAt(),
+                updatedConversation.getUpdatedAt()
+        );
+    }
 
-        User user = currentUserService.getCurrentUser();
 
-        Conversation conversation = conversationRepository
-                .findByIdAndUser(conversationId, user)
-                .orElseThrow(() ->
-                        new ConversationNotFoundException(
-                                "Conversation not found"
-                        )
-                );
-
-        conversationRepository.delete(conversation);
 
         return "Deletion successful";
     }

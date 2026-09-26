@@ -79,4 +79,14 @@ public class UserService {
                 user.getCreatedAt()
         );
     }
+    public void updatePassword(String email, String newPassword) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setPasswordHash(passwordEncoder.encode(newPassword));
+
+        userRepository.save(user);
+    }
+
 }
