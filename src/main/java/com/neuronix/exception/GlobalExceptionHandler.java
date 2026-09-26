@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+
 import java.util.Map;
 
 @RestControllerAdvice
@@ -33,6 +34,26 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public Map<String, String> handleInvalidCredentials(
             InvalidCredentialsException exception
+    ) {
+        return Map.of(
+                "message", exception.getMessage()
+        );
+    }
+
+    @ExceptionHandler(ConversationNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handleConversationNotFound(
+            ConversationNotFoundException exception
+    ) {
+        return Map.of(
+                "message", exception.getMessage()
+        );
+    }
+
+    @ExceptionHandler(MessageNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handleMessageNotFound(
+            MessageNotFoundException exception
     ) {
         return Map.of(
                 "message", exception.getMessage()
