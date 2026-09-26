@@ -87,21 +87,6 @@ public class ConversationService {
         );
     }
 
-    public void deleteConversation(
-            Long conversationId
-    ) {
 
-        User user = currentUserService.getCurrentUser();
-
-        Conversation conversation = conversationRepository
-                .findByIdAndUser(conversationId, user)
-                .orElseThrow(() ->
-                        new IllegalArgumentException(
-                                "Conversation not found"
-                        )
-                );
-
-        conversationRepository.delete(conversation);
-    }
 
 }

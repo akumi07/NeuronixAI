@@ -1,8 +1,6 @@
 package com.neuronix.auth;
 
-import com.neuronix.auth.dto.AuthResponse;
-import com.neuronix.auth.dto.LoginRequest;
-import com.neuronix.auth.dto.RegisterRequest;
+import com.neuronix.auth.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,5 +23,20 @@ public class AuthController {
             @Valid @RequestBody RegisterRequest request
     ) {
         return authService.register(request);
+    }
+    @PostMapping("/forget_password")
+    public AuthResponse forgetPassword(
+            @Valid @RequestBody ForgetPasswordRequest request
+    ) {
+        return authService.forgetPassword(request);
+    }
+    @PostMapping("/new_password")
+    public void newPassword(
+            @RequestHeader("Authorization") String token,
+            @Valid @RequestBody NewPasswordRequest request
+    ) {
+        token = token.substring(7);
+
+        authService.newPassword(token, request);
     }
 }
