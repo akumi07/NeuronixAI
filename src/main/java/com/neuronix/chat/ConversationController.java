@@ -27,8 +27,8 @@ public class ConversationController {
         return conversationService.getConversationMessages(conversationId);
     }
 
-    @PatchMapping("/{conversationId/title}")
-    public ConversationResponse updateConversation(
+    @PatchMapping("/{conversationId}/title")
+    public ConversationResponse updateConversationTitle(
             @PathVariable Long conversationId,
             @RequestBody Update_titleConversationRequest request
     ) {
