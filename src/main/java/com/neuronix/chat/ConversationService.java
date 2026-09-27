@@ -2,15 +2,11 @@ package com.neuronix.chat;
 
 import com.neuronix.chat.dto.ConversationResponse;
 import com.neuronix.chat.dto.MessageResponse;
-import com.neuronix.exception.ConversationNotFoundException;
 import com.neuronix.chat.dto.Update_titleConversationRequest;
 import com.neuronix.security.CurrentUserService;
 import com.neuronix.user.User;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.neuronix.exception.MessageNotFoundException;
-
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,10 +42,9 @@ public class ConversationService {
         Conversation conversation = conversationRepository
                 .findByIdAndUser(conversationId, user)
                 .orElseThrow(() ->
-                        new ConversationNotFoundException(
+                        new IllegalArgumentException(
                                 "Conversation not found"
                         )
-
                 );
 
         return messageRepository
@@ -64,7 +59,25 @@ public class ConversationService {
                 .collect(Collectors.toList());
     }
 
+    public ConversationResponse updateConversationTitle(
+            Long conversationId,
+            Update_titleConversationRequest request
+    ) {
 
+        User user = currentUserService.getCurrentUser();
+
+        Conversation conversation = conversationRepository
+                .findByIdAndUser(conversationId, user)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Conversation not found"
+                        )
+                );
+
+        conversation.updateTitle(request.getTitle());
+
+        Conversation updatedConversation =
+                conversationRepository.save(conversation);
 
         return new ConversationResponse(
                 updatedConversation.getId(),
@@ -74,8 +87,21 @@ public class ConversationService {
         );
     }
 
+    public void deleteConversation(
+            Long conversationId
+    ) {
 
+        User user = currentUserService.getCurrentUser();
 
-        return "Deletion successful";
+        Conversation conversation = conversationRepository
+                .findByIdAndUser(conversationId, user)
+                .orElseThrow(() ->
+                        new IllegalArgumentException(
+                                "Conversation not found"
+                        )
+                );
+
+        conversationRepository.delete(conversation);
     }
+
 }
