@@ -1,6 +1,8 @@
 package com.neuronix.auth;
 
-import com.neuronix.auth.dto.*;
+import com.neuronix.auth.dto.AuthResponse;
+import com.neuronix.auth.dto.LoginRequest;
+import com.neuronix.auth.dto.RegisterRequest;
 import com.neuronix.exception.InvalidCredentialsException;
 import com.neuronix.security.JwtService;
 import com.neuronix.user.UserService;
@@ -11,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+
 
 @Service
 @RequiredArgsConstructor
@@ -51,24 +54,5 @@ public class AuthService {
         String token = jwtService.generateToken(user.email());
 
         return new AuthResponse(token);
-    }
-    public AuthResponse forgetPassword(ForgetPasswordRequest request) {
-
-        UserResponse user = userService.getUserByEmail(request.email());
-
-        String token = jwtService.generateToken(user.email());
-
-        return new AuthResponse(token);
-    }
-    public void newPassword(
-            String token,
-            NewPasswordRequest request
-    ) {
-        String email = jwtService.extractEmail(token);
-
-        userService.updatePassword(
-                email,
-                request.password()
-        );
     }
 }
