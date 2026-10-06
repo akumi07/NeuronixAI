@@ -3,6 +3,7 @@ package com.neuronix.auth;
 import com.neuronix.auth.dto.*;
 import com.neuronix.exception.InvalidCredentialsException;
 import com.neuronix.security.JwtService;
+import com.neuronix.security.TokenRevocationService;
 import com.neuronix.user.UserService;
 import com.neuronix.user.dto.CreateUserRequest;
 import com.neuronix.user.dto.UserResponse;
@@ -12,6 +13,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -19,6 +23,9 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserService userService;
+    private final TokenRevocationService tokenRevocationService;
+
+
 
     public AuthResponse login(LoginRequest request) {
 
@@ -71,4 +78,13 @@ public class AuthService {
                 request.password()
         );
     }
+
+
+
+    public String logout(String token) {
+        tokenRevocationService.revokeToken(token);
+        return "Logged out successfully";
+    }
+
+
 }

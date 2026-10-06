@@ -20,6 +20,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final CustomUserDetailsService userDetailsService;
+    private final TokenRevocationService tokenRevocationService;
 
     @Override
     protected void doFilterInternal(
@@ -38,6 +39,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt = authHeader.substring(7);
 
         try {
+
+            // Check if token was revoked during logout
+            if (tokenRevocationService.isTokenRevoked(jwt)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write(
+                        "Token has been revoked. Please login again."
+                );
+                return;
+            }
+
             String email = jwtService.extractEmail(jwt);
 
             if (email != null &&
