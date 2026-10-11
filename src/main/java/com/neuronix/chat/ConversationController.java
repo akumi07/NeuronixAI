@@ -29,6 +29,10 @@ public class ConversationController {
     @DeleteMapping("/{conversationId}/deleteConversation")
     public String deleteConversation(
             @PathVariable Long conversationId
+    @PatchMapping("/{conversationId}/title")
+    public ConversationResponse updateConversationTitle(
+            @PathVariable Long conversationId,
+            @RequestBody Update_titleConversationRequest request
     ) {
         return conversationService.deleteConversation(conversationId);
     }
