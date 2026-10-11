@@ -40,4 +40,9 @@ public class Conversation {
     public void updateTimestamp() {
         this.updatedAt = LocalDateTime.now();
     }
+
+    public void updateTitle(String title) {
+        this.title = title;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

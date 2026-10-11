@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 
 import java.io.IOException;
 
@@ -42,5 +43,14 @@ public class S3StorageService {
                     e
             );
         }
+    }
+    public byte[] downloadFile(String objectKey) {
+
+        GetObjectRequest request = GetObjectRequest.builder()
+                .bucket(BUCKET_NAME)
+                .key(objectKey)
+                .build();
+
+        return s3Client.getObjectAsBytes(request).asByteArray();
     }
 }
