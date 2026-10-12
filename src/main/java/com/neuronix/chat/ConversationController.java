@@ -25,7 +25,7 @@ public class ConversationController {
     ) {
         return conversationService.getConversationMessages(conversationId);
     }
-
+//delete controler
     @DeleteMapping("/{conversationId}/deleteConversation")
     public String deleteConversation(
             @PathVariable Long conversationId
