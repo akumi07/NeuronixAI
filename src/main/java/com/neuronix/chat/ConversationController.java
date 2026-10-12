@@ -4,6 +4,7 @@ import com.neuronix.chat.dto.ConversationResponse;
 import com.neuronix.chat.dto.MessageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import com.neuronix.chat.dto.Update_titleConversationRequest;
 
 import java.util.List;
 
@@ -26,14 +27,16 @@ public class ConversationController {
         return conversationService.getConversationMessages(conversationId);
     }
 
-    @DeleteMapping("/{conversationId}/deleteConversation")
-    public String deleteConversation(
-            @PathVariable Long conversationId
     @PatchMapping("/{conversationId}/title")
     public ConversationResponse updateConversationTitle(
             @PathVariable Long conversationId,
             @RequestBody Update_titleConversationRequest request
     ) {
-        return conversationService.deleteConversation(conversationId);
+        return conversationService.updateConversationTitle(
+                conversationId,
+                request
+        );
     }
 }
+
+    //delete
