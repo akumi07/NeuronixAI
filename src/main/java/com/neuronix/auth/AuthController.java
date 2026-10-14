@@ -26,13 +26,13 @@ public class AuthController {
     ) {
         return authService.register(request);
     }
-    @PostMapping("/forget_password")
+    @PostMapping("/forget-password")
     public AuthResponse forgetPassword(
             @Valid @RequestBody ForgetPasswordRequest request
     ) {
         return authService.forgetPassword(request);
     }
-    @PostMapping("/new_password")
+    @PostMapping("/new-password")
     public void newPassword(
             @RequestHeader("Authorization") String token,
             @Valid @RequestBody NewPasswordRequest request

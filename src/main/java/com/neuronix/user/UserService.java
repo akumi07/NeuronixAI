@@ -84,9 +84,10 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        user.setPasswordHash(passwordEncoder.encode(newPassword));
+        String encodedPassword = passwordEncoder.encode(newPassword);
+
+        user.setPasswordHash(encodedPassword);
 
         userRepository.save(user);
     }
-
 }
