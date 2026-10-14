@@ -38,4 +38,15 @@ public class GlobalExceptionHandler {
                 "message", exception.getMessage()
         );
     }
+
+    @ExceptionHandler(MessageNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> handleMessageNotFound(
+            MessageNotFoundException exception
+    ) {
+        return Map.of(
+                "message", exception.getMessage()
+        );
+    }
+
 }
