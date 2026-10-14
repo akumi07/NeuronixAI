@@ -3,7 +3,9 @@ package com.neuronix.auth;
 import com.neuronix.auth.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ai.chat.client.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -38,5 +40,16 @@ public class AuthController {
         token = token.substring(7);
 
         authService.newPassword(token, request);
+    }
+    @PostMapping("/logout")
+    public String logout(
+            @RequestHeader("Authorization") String token
+    ) {
+
+        if (token.startsWith("Bearer ")) {
+            token = token.substring(7);
+        }
+
+        return authService.logout(token);
     }
 }
