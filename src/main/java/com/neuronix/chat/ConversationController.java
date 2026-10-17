@@ -25,6 +25,20 @@ public class ConversationController {
     ) {
         return conversationService.getConversationMessages(conversationId);
     }
+
+    // get-message-by-id
+
+    @GetMapping("/{conversationId}/messages/{messageId}")
+    public MessageResponse getMessageById(
+            @PathVariable Long conversationId,
+            @PathVariable Long messageId
+    ) {
+        return conversationService.getMessageById(
+                conversationId,
+                messageId
+        );
+    }
+
 //delete controler
     @DeleteMapping("/{conversationId}/deleteConversation")
     public String deleteConversation(

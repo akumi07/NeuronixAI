@@ -9,6 +9,7 @@ import com.neuronix.user.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.neuronix.exception.MessageNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,6 +61,37 @@ public class ConversationService {
                         message.getCreatedAt()
                 ))
                 .collect(Collectors.toList());
+    }
+
+    //get-message-by-id
+    public MessageResponse getMessageById(
+            Long conversationId,
+            Long messageId
+    ) {
+        User user = currentUserService.getCurrentUser();
+
+        Conversation conversation = conversationRepository
+                .findByIdAndUser(conversationId, user)
+                .orElseThrow(() ->
+                        new ConversationNotFoundException(
+                                "Conversation not found"
+                        )
+                );
+
+        Message message = messageRepository
+                .findByIdAndConversation(messageId, conversation)
+                .orElseThrow(() ->
+                        new MessageNotFoundException(
+                                "Message not found"
+                        )
+                );
+
+        return new MessageResponse(
+                message.getId(),
+                message.getRole(),
+                message.getContent(),
+                message.getCreatedAt()
+        );
     }
 
     public ConversationResponse updateConversationTitle(
