@@ -39,4 +39,5 @@ public class AuthController {
 
         authService.newPassword(token, request);
     }
+
 }
