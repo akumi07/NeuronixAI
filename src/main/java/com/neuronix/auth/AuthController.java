@@ -49,7 +49,7 @@ public class AuthController {
         if (token.startsWith("Bearer ")) {
             token = token.substring(7);
         }
-
+//logout service
         return authService.logout(token);
     }
 }
